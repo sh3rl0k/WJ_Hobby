@@ -1,0 +1,7 @@
+﻿@model WJ_Hobby.Models.ViewModels.Cart.CartVm
+
+<div class="ajaxcart" style="color: white;">
+    Your Cart: @Model.Quantity item(s) - $@Model.Price
+    <br />
+    @Html.ActionLink("Checkout", "Index")
+</div>
