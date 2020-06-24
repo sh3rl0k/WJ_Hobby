@@ -61,6 +61,9 @@ namespace WJ_Hobby.Controllers
                     qty += item.Quantity;
                     price += item.Quantity * item.Price;
                 }
+
+                model.Quantity = qty;
+                model.Price = price;
             }
             else
             {
@@ -128,6 +131,30 @@ namespace WJ_Hobby.Controllers
 
             //return partialview
             return PartialView(model);
+        }
+
+        // GET: Cart/IncrementProduct
+        public JsonResult IncrementProduct(int productId)
+        {
+
+            //init cart list
+            List<CartVm> cart = Session["cart"] as List<CartVm>;
+
+            using (Db db = new Db())
+            {
+
+                //get cartvm from list
+                CartVm model = cart.FirstOrDefault(x => x.ProductId == productId);
+
+                //increment qty
+                model.Quantity++;
+
+                //store needed data
+                var result = new { qty = model.Quantity, price = model.Price};
+
+                //return json with data
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
         }
     }
 }
